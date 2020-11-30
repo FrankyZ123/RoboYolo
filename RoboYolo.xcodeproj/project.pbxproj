@@ -14,7 +14,6 @@
 		106DD56F25604D300030CB7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 106DD56E25604D300030CB7A /* Assets.xcassets */; };
 		106DD57225604D300030CB7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 106DD57025604D300030CB7A /* LaunchScreen.storyboard */; };
 		106DD57B25604D560030CB7A /* RobotConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD57A25604D560030CB7A /* RobotConnection.swift */; };
-		106DD57E25604DA30030CB7A /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD57D25604DA30030CB7A /* PhotoViewController.swift */; };
 		106DD59A25604E800030CB7A /* Ev3DirectCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD58B25604E7F0030CB7A /* Ev3DirectCommand.swift */; };
 		106DD59B25604E800030CB7A /* Ev3Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD58C25604E7F0030CB7A /* Ev3Command.swift */; };
 		106DD59C25604E800030CB7A /* BrickButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD58D25604E7F0030CB7A /* BrickButtons.swift */; };
@@ -30,6 +29,7 @@
 		106DD5A625604E800030CB7A /* Ev3SystemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD59725604E800030CB7A /* Ev3SystemCommand.swift */; };
 		106DD5A725604E800030CB7A /* Ev3Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD59825604E800030CB7A /* Ev3Brick.swift */; };
 		106DD5A825604E800030CB7A /* Ev3Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD59925604E800030CB7A /* Ev3Enums.swift */; };
+		10BCC076257452D1006106CA /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 10BCC075257452D1006106CA /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,6 @@
 		106DD57125604D300030CB7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		106DD57325604D300030CB7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		106DD57A25604D560030CB7A /* RobotConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotConnection.swift; sourceTree = "<group>"; };
-		106DD57D25604DA30030CB7A /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		106DD58B25604E7F0030CB7A /* Ev3DirectCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3DirectCommand.swift; sourceTree = "<group>"; };
 		106DD58C25604E7F0030CB7A /* Ev3Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3Command.swift; sourceTree = "<group>"; };
 		106DD58D25604E7F0030CB7A /* BrickButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrickButtons.swift; sourceTree = "<group>"; };
@@ -58,6 +57,7 @@
 		106DD59725604E800030CB7A /* Ev3SystemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3SystemCommand.swift; sourceTree = "<group>"; };
 		106DD59825604E800030CB7A /* Ev3Brick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3Brick.swift; sourceTree = "<group>"; };
 		106DD59925604E800030CB7A /* Ev3Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3Enums.swift; sourceTree = "<group>"; };
+		10BCC075257452D1006106CA /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +92,9 @@
 			children = (
 				106DD58A25604E6C0030CB7A /* ev3ios */,
 				106DD57A25604D560030CB7A /* RobotConnection.swift */,
-				106DD57D25604DA30030CB7A /* PhotoViewController.swift */,
 				106DD56525604D2E0030CB7A /* AppDelegate.swift */,
 				106DD56725604D2E0030CB7A /* SceneDelegate.swift */,
+				10BCC075257452D1006106CA /* YOLOv3.mlmodel */,
 				106DD56925604D2E0030CB7A /* ViewController.swift */,
 				106DD56B25604D2E0030CB7A /* Main.storyboard */,
 				106DD56E25604D300030CB7A /* Assets.xcassets */,
@@ -118,8 +118,8 @@
 				106DD59925604E800030CB7A /* Ev3Enums.swift */,
 				106DD59425604E800030CB7A /* Ev3Port.swift */,
 				106DD59225604E800030CB7A /* Ev3ReportDelegate.swift */,
-				106DD58F25604E800030CB7A /* Ev3Response.swift */,
 				106DD59525604E800030CB7A /* Ev3ResponseManager.swift */,
+				106DD58F25604E800030CB7A /* Ev3Response.swift */,
 				106DD59325604E800030CB7A /* Ev3SimpleSounds.swift */,
 				106DD59725604E800030CB7A /* Ev3SystemCommand.swift */,
 			);
@@ -205,6 +205,7 @@
 				106DD56625604D2E0030CB7A /* AppDelegate.swift in Sources */,
 				106DD5A325604E800030CB7A /* Ev3Port.swift in Sources */,
 				106DD57B25604D560030CB7A /* RobotConnection.swift in Sources */,
+				10BCC076257452D1006106CA /* YOLOv3.mlmodel in Sources */,
 				106DD5A725604E800030CB7A /* Ev3Brick.swift in Sources */,
 				106DD59B25604E800030CB7A /* Ev3Command.swift in Sources */,
 				106DD5A825604E800030CB7A /* Ev3Enums.swift in Sources */,
@@ -212,7 +213,6 @@
 				106DD5A425604E800030CB7A /* Ev3ResponseManager.swift in Sources */,
 				106DD5A525604E800030CB7A /* Ev3Connection.swift in Sources */,
 				106DD5A225604E800030CB7A /* Ev3SimpleSounds.swift in Sources */,
-				106DD57E25604DA30030CB7A /* PhotoViewController.swift in Sources */,
 				106DD5A625604E800030CB7A /* Ev3SystemCommand.swift in Sources */,
 				106DD59C25604E800030CB7A /* BrickButtons.swift in Sources */,
 				106DD59E25604E800030CB7A /* Ev3Response.swift in Sources */,

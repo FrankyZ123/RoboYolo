@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,42 +12,58 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RoboYolo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <view key="view" contentMode="scaleToFill" id="Dhx-FD-wbp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ju2-IT-hle">
-                                <rect key="frame" x="180" y="433" width="54" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Camera"/>
-                                <connections>
-                                    <segue destination="Frd-pC-v6a" kind="show" id="rws-MB-b7N"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2F-dA-Ooq">
+                                <rect key="frame" x="0.0" y="454.5" width="320" height="113.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accuracy: 0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXt-jb-OzY">
+                                        <rect key="frame" x="20" y="90.5" width="280" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Object Class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26a-Xp-jF2">
+                                        <rect key="frame" x="20" y="10" width="280" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="26a-Xp-jF2" firstAttribute="leading" secondItem="Y2F-dA-Ooq" secondAttribute="leading" constant="20" id="WIK-G7-SE0"/>
+                                    <constraint firstItem="fXt-jb-OzY" firstAttribute="leading" secondItem="Y2F-dA-Ooq" secondAttribute="leading" constant="20" id="YhZ-jF-2JT"/>
+                                    <constraint firstItem="fXt-jb-OzY" firstAttribute="top" secondItem="26a-Xp-jF2" secondAttribute="bottom" constant="60" id="atL-8w-C36"/>
+                                    <constraint firstAttribute="trailing" secondItem="fXt-jb-OzY" secondAttribute="trailing" constant="20" id="enr-gf-ZT6"/>
+                                    <constraint firstItem="fXt-jb-OzY" firstAttribute="top" secondItem="26a-Xp-jF2" secondAttribute="bottom" constant="60" id="gbE-bm-Lic"/>
+                                    <constraint firstItem="26a-Xp-jF2" firstAttribute="top" secondItem="Y2F-dA-Ooq" secondAttribute="top" constant="10" id="glO-19-GVd"/>
+                                    <constraint firstItem="fXt-jb-OzY" firstAttribute="top" secondItem="26a-Xp-jF2" secondAttribute="bottom" constant="60" id="mvv-9z-Ybh"/>
+                                    <constraint firstAttribute="trailing" secondItem="26a-Xp-jF2" secondAttribute="trailing" constant="20" id="nek-Lf-XKn"/>
+                                    <constraint firstItem="fXt-jb-OzY" firstAttribute="top" secondItem="26a-Xp-jF2" secondAttribute="bottom" constant="60" id="sK3-1b-7YS"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="SmW-aW-aWR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Y2F-dA-Ooq" firstAttribute="width" secondItem="Dhx-FD-wbp" secondAttribute="width" id="BMM-Gf-ntW"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Y2F-dA-Ooq" secondAttribute="bottom" id="EBi-tY-IPz"/>
+                            <constraint firstItem="Y2F-dA-Ooq" firstAttribute="height" secondItem="Dhx-FD-wbp" secondAttribute="height" multiplier="0.2" id="V9T-ru-I60"/>
+                            <constraint firstItem="Y2F-dA-Ooq" firstAttribute="centerX" secondItem="Dhx-FD-wbp" secondAttribute="centerX" id="Zcq-2C-B84"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="Accuracy" destination="fXt-jb-OzY" id="ucl-Q5-um5"/>
+                        <outlet property="CameraView" destination="Y2F-dA-Ooq" id="vr5-8J-qdp"/>
+                        <outlet property="ObjectClass" destination="26a-Xp-jF2" id="DfK-5B-dhN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140.57971014492756" y="118.52678571428571"/>
-        </scene>
-        <!--Photo View Controller-->
-        <scene sceneID="vcV-gW-ttJ">
-            <objects>
-                <viewController id="Frd-pC-v6a" customClass="PhotoViewController" customModule="RoboYolo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="YUq-3D-67s">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="acb-NQ-kma"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="7hd-xh-dhw"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fM8-b5-Ykj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="948" y="119"/>
+            <point key="canvasLocation" x="140" y="118.29085457271366"/>
         </scene>
     </scenes>
     <resources>
