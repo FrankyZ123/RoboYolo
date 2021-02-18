@@ -13,6 +13,8 @@ class YOLOViewController: CameraViewController {
     
     private var detectionOverlay: CALayer! = nil
     
+    var direction: String = "n/a"
+    
     // Vision parts
     private var requests = [VNRequest]()
     
@@ -50,14 +52,19 @@ class YOLOViewController: CameraViewController {
                 continue
             }
             // Select only the label with the highest confidence.
-            let topLabelObservation = objectObservation.labels[0]
+            let topLabelObservation = objectObservation.labels[0].identifier
             
-            if topLabelObservation.identifier == self.targetClass {
+            if topLabelObservation == self.targetClass {
                 let objectBounds = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
+                
+                self.ev3Handler(objectBounds)
                 
                 let shapeLayer = self.createRoundedRectLayerWithBounds(objectBounds)
                 
                 detectionOverlay.addSublayer(shapeLayer)
+            } else {
+                self.robotConnection.brick?.directCommand.stopMotor(onPorts: .A, withBrake: true)
+                self.robotConnection.brick?.directCommand.stopMotor(onPorts: .D, withBrake: true)
             }
         }
         self.updateLayerGeometry()
@@ -117,12 +124,11 @@ class YOLOViewController: CameraViewController {
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
         
         // rotate the layer into screen orientation and scale and mirror
-        detectionOverlay.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(.pi / 2.0)).scaledBy(x: scale, y: -scale))
+        detectionOverlay.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(.pi / 2.0)).scaledBy(x: scale, y: scale))
         // center the layer
         detectionOverlay.position = CGPoint(x: bounds.midX, y: bounds.midY)
         
         CATransaction.commit()
-        
     }
     
     func createRoundedRectLayerWithBounds(_ bounds: CGRect) -> CALayer {
@@ -130,8 +136,51 @@ class YOLOViewController: CameraViewController {
         shapeLayer.bounds = bounds
         shapeLayer.borderWidth = 10
         shapeLayer.position = CGPoint(x: bounds.midX, y: bounds.midY)
+        
         shapeLayer.name = "Found Object"
         return shapeLayer
     }
     
+    func ev3Handler(_ bounds: CGRect) {
+        let xDifference = (bufferSize.height / 2.0) - bounds.midY
+        
+        let threshold : CGFloat = 25
+        
+        print(xDifference)
+        print(bounds.midY)
+        
+        if xDifference > threshold {
+            print("right")
+            self.direction = "left"
+        } else if xDifference < -1 * threshold {
+            print("left")
+            self.direction = "right"
+        } else {
+            print("n/a")
+            self.direction = "n/a"
+        }
+        
+        if self.direction == "right" {
+            self.turnRight()
+        } else if self.direction == "left" {
+            self.turnLeft()
+        } else {
+            self.stopMotors()
+        }
+    }
+    
+    func turnRight() {
+        self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .A, withPower: 12)
+        self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .D, withPower: -12)
+    }
+    
+    func turnLeft() {
+        self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .A, withPower: -12)
+        self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .D, withPower: 12)
+    }
+    
+    func stopMotors() {
+        self.robotConnection.brick?.directCommand.stopMotor(onPorts: .A, withBrake: true)
+        self.robotConnection.brick?.directCommand.stopMotor(onPorts: .D, withBrake: true)
+    }
 }

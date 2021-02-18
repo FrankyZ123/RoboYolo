@@ -24,6 +24,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
+    private let ev3Queue = DispatchQueue(label: "ev3ControlQueue")
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         // to be implemented in the subclass
     }
@@ -31,11 +33,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAVCapture()
-        
-        self.robotConnection.setup()
-        self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .B, withPower: 50) // for some reason, motors B and C do not behave like we'd expect
-        sleep(10)
-        self.robotConnection.brick?.directCommand.stopMotor(onPorts: .B, withBrake: true)
+        setupRobotConnection()
+        ev3Handler()
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,11 +42,19 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         // Dispose of any resources that can be recreated.
     }
     
+    func setupRobotConnection() {
+        self.robotConnection.setup()
+    }
+    
+    func ev3Handler() {
+        // RobotAction.swift()
+    }
+    
     func setupAVCapture() {
         var deviceInput: AVCaptureDeviceInput!
         
         // Select a video device, make an input
-        let videoDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
+        let videoDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .front).devices.first
         
         do {
             deviceInput = try AVCaptureDeviceInput(device: videoDevice!)
@@ -85,6 +92,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             let dimensions = CMVideoFormatDescriptionGetDimensions((videoDevice?.activeFormat.formatDescription)!)
             bufferSize.width = CGFloat(dimensions.width)
             bufferSize.height = CGFloat(dimensions.height)
+            
             videoDevice!.unlockForConfiguration()
         } catch {
             print(error)
@@ -127,6 +135,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         default:
             exifOrientation = .up
         }
+        
         return exifOrientation
     }
 }
