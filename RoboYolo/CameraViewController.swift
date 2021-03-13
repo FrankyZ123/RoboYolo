@@ -3,6 +3,8 @@
 //  RoboYolo
 //
 //  Created by Frank Zane Sand on 11/14/20.
+
+// Adapted from File adapted from: https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture
 //
 
 import UIKit

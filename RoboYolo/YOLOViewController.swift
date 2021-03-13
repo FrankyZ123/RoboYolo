@@ -1,8 +1,5 @@
 /*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Contains the object recognition view controller for the Breakfast Finder.
+File adapted from: https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture
 */
 
 import UIKit
