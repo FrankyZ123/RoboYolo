@@ -13,6 +13,10 @@ import Vision
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     var targetClass = ""
+    var accuracyThreshold = Float(0.0)
+    var leftMotor = ""
+    var rightMotor = ""
+    var topNSelector = ""
     
     var bufferSize: CGSize = .zero
     var rootLayer: CALayer! = nil
@@ -49,7 +53,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func ev3Handler() {
-        // RobotAction.swift()
+        // YOLOViewController.swift()
     }
     
     func setupAVCapture() {
