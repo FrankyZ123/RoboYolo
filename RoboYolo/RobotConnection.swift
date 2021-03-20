@@ -3,9 +3,10 @@
 //  RoboYolo
 //
 //  Created by Frank Zane Sand on 11/14/20.
-//  
-//  Copyright (c) 2017 Takehiko YOSHIDA. All rights reserved.
 //
+//  Code taken from: https://github.com/chihayafuru/SampleOfEV3IOS
+//
+//  Copyright (c) 2017 Takehiko YOSHIDA. All rights reserved.
 
 import UIKit
 import ExternalAccessory

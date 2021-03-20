@@ -1,46 +1,43 @@
-/*
-File adapted from: https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture
-*/
+//
+// File adapted from: https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture
+//
 
 import UIKit
 import AVFoundation
 import Vision
 
 class YOLOViewController: CameraViewController {
-    
+    // setup the detection overlay object, this is what we will draw bounding boxes on
     private var detectionOverlay: CALayer! = nil
     
-    var direction: String = "n/a"
+    // set a class wide variable for the direction the EV3 is currently moving in
+    var currentDirection: String = ""
     
     // Vision parts
     private var requests = [VNRequest]()
     
+    // load the YOLOv3 model
     var model = YOLOv3().model
     
-    @discardableResult
-    func setupVision() -> NSError? {
+    func setupVision() {
         // Setup Vision parts
-        let error: NSError! = nil
-        guard let model = try? VNCoreMLModel(for: model) else { return nil }
+        guard let model = try? VNCoreMLModel(for: model) else { return }
         
-        do {
-            let objectRecognition = VNCoreMLRequest(model: model, completionHandler: { (request, error) in
-                DispatchQueue.main.async(execute: {
-                    // perform all the UI updates on the main queue
-                    if let results = request.results {
-                        self.drawVisionRequestResults(results)
-                    }
-                })
+        // this is the meet of the application
+        // it places in a swift dispatch queue the result detecting function
+        // which in turn handles the tracking functionality
+        let objectRecognition = VNCoreMLRequest(model: model, completionHandler: { (request, error) in
+            DispatchQueue.main.async(execute: {
+                // perform all the UI updates on the main queue
+                if let results = request.results {
+                    self.detectResults(results)
+                }
             })
-            self.requests = [objectRecognition]
-        } catch let error as NSError {
-            print("Model loading went wrong: \(error)")
-        }
-        
-        return error
+        })
+        self.requests = [objectRecognition]
     }
     
-    func drawVisionRequestResults(_ results: [Any]) {
+    func detectResults(_ results: [Any]) {
         CATransaction.begin()
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
         detectionOverlay.sublayers = nil // remove all the old recognized objects
@@ -48,32 +45,57 @@ class YOLOViewController: CameraViewController {
         // by default, we're going to take the top observation in results
         // which is the most confident object bounding box returned
         
-        if results.count > 0 {
+        // this is an example of hidden complexity that would need to be
+        // better modularized for a more technical audience because currently
+        // this will never bound more than one object in a frame
+        
+        if results.count > 0 { // if there is an object in the frame
+            // take the most confident object observation
             let topObservation = results.first as! VNRecognizedObjectObservation
             
-            let iter = returnIter()
+            // determine how many classifications to look through
+            let iter = returnIter(topNSelector: self.topNSelector, resultsLength: topObservation.labels.count)
             
-            // for loop will go from 1 to the number of classes we want to look at
+            // for loop will search the sorted labels list
+            // from most confident class prediction to
+            // N most confident class prediction, where N is
+            // taken as input from the user "Top-N Selector"
             
-            for index in 1...iter {
-                if (topObservation.labels[index].identifier == self.targetClass &&
-
-            // accuracy of prediction is the confidence of the object * confidence of the label
-            // https://developer.apple.com/documentation/vision/vnrecognizedobjectobservation
-
-                    self.accuracyThreshold >= topObservation.labels[index].confidence * topObservation.confidence) {
-
-                    let objectBounds = VNImageRectForNormalizedRect(topObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
-
-                    self.ev3Handler(objectBounds)
+            for index in 0...iter {
+                
+                if (
                     
+                    // if the classification matches user class
+                    topObservation.labels[index].identifier == self.targetClass
+                        
+                    &&
+
+                    // the confidence of that (object, class) is greater than user threshold
+                    // accuracy of prediction is the confidence of the object * confidence of the label
+                    // https://developer.apple.com/documentation/vision/vnrecognizedobjectobservation
+
+                    topObservation.labels[index].confidence * topObservation.confidence >= self.accuracyThreshold) {
+                    // compute the objectBounds
+                    let objectBounds = VNImageRectForNormalizedRect(topObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
+                    
+                    // given the objectBounds and bufferSize, determine whether to go left or right
+                    self.currentDirection = track(
+                        self.robotConnection,
+                        currentDirection: self.currentDirection,
+                        bounds: objectBounds,
+                        bufferSize: bufferSize,
+                        leftMotor: self.leftMotor,
+                        rightMotor: self.rightMotor
+                    )
+                    
+                    // create the bounding box
                     let shapeLayer = self.createRoundedRectLayerWithBounds(objectBounds)
                     
+                    // add the bounding box
                     detectionOverlay.addSublayer(shapeLayer)
                     
+                    // if the target class is found, we want to exit from the for loop
                     break
-                } else {
-                    self.stopMotors()
                 }
             }
         }
@@ -150,115 +172,5 @@ class YOLOViewController: CameraViewController {
         
         shapeLayer.name = "Found Object"
         return shapeLayer
-    }
-    
-    func ev3Handler(_ bounds: CGRect) {
-        let xDifference = (bufferSize.height / 2.0) - bounds.midY
-        
-        let threshold : CGFloat = 25
-        
-        if xDifference > threshold {
-            print("right")
-            self.direction = "left"
-        } else if xDifference < -1 * threshold {
-            print("left")
-            self.direction = "right"
-        } else {
-            print("n/a")
-            self.direction = "n/a"
-        }
-        
-        if self.direction == "right" {
-            self.turnRight()
-        } else if self.direction == "left" {
-            self.turnLeft()
-        } else {
-            self.stopMotors()
-        }
-    }
-    
-    func turnRight() {
-        self.turnLeftMotor(-15)
-        self.turnRightMotor(15)
-    }
-    
-    func turnLeft() {
-        self.turnLeftMotor(15)
-        self.turnRightMotor(-15)
-    }
-    
-    func stopMotors() {
-        self.stopRightMotor()
-        self.stopLeftMotor()
-    }
-    
-    func turnRightMotor(_ power: Int16) {
-        if self.rightMotor == "A" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .A, withPower: power)
-        } else if self.rightMotor == "B" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .B, withPower: power)
-        } else if self.rightMotor == "C" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .C, withPower: power)
-        } else if self.rightMotor == "D" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .D, withPower: power)
-        } else {
-            print("Ahhhh everything's broken!") // bad example of a use case failing silently if the user inputs the wrong motor value
-        }
-    }
-    
-    func turnLeftMotor(_ power: Int16) {
-        if self.leftMotor == "A" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .A, withPower: power)
-        } else if self.leftMotor == "B" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .B, withPower: power)
-        } else if self.leftMotor == "C" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .C, withPower: power)
-        } else if self.leftMotor == "D" {
-            self.robotConnection.brick?.directCommand.turnMotorAtPower(onPorts: .D, withPower: power)
-        } else {
-            print("Ahhhh everything's broken!") // bad example of a use case failing silently if the user inputs the wrong motor value
-        }
-    }
-    
-    func stopRightMotor() {
-        if self.rightMotor == "A" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .A, withBrake: true)
-        } else if self.rightMotor == "B" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .B, withBrake: true)
-        } else if self.rightMotor == "C" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .C, withBrake: true)
-        } else if self.rightMotor == "D" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .D, withBrake: true)
-        } else {
-            print("Ahhhh everything's broken!") // bad example of a use case failing silently if the user inputs the wrong motor value
-        }
-    }
-    
-    func stopLeftMotor() {
-        if self.leftMotor == "A" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .A, withBrake: true)
-        } else if self.leftMotor == "B" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .B, withBrake: true)
-        } else if self.leftMotor == "C" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .C, withBrake: true)
-        } else if self.leftMotor == "D" {
-            self.robotConnection.brick?.directCommand.stopMotor(onPorts: .D, withBrake: true)
-        } else {
-            print("Ahhhh everything's broken!") // bad example of a use case failing silently if the user inputs the wrong motor value
-        }
-    }
-    
-    func returnIter() -> Int {
-        var iter = 0
-        
-        if self.topNSelector == "Top-1" {
-            iter = 1
-        } else if self.topNSelector == "Top-5" {
-            iter = 5
-        } else { // "Top-10"
-            iter = 10
-        }
-        
-        return iter
     }
 }

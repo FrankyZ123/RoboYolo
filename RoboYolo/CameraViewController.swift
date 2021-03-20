@@ -3,8 +3,8 @@
 //  RoboYolo
 //
 //  Created by Frank Zane Sand on 11/14/20.
-
-// Adapted from File adapted from: https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture
+// 
+//  File adapted from: https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture
 //
 
 import UIKit
@@ -12,16 +12,17 @@ import AVFoundation
 import Vision
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+    // declare dumby vars for the inputs, will be overwritten when "run" button is pressed
     var targetClass = ""
     var accuracyThreshold = Float(0.0)
     var leftMotor = ""
     var rightMotor = ""
     var topNSelector = ""
+    var robotConnection : RobotConnection = RobotConnection()
     
+    // setup the buffer size and root layer
     var bufferSize: CGSize = .zero
     var rootLayer: CALayer! = nil
-    
-    var robotConnection : RobotConnection = RobotConnection()
     
     @IBOutlet weak private var previewView: UIView!
     private let session = AVCaptureSession()
@@ -30,30 +31,19 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
-    private let ev3Queue = DispatchQueue(label: "ev3ControlQueue")
-    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         // to be implemented in the subclass
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.robotConnection.setup()
         setupAVCapture()
-        setupRobotConnection()
-        ev3Handler()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func setupRobotConnection() {
-        self.robotConnection.setup()
-    }
-    
-    func ev3Handler() {
-        // YOLOViewController.swift()
     }
     
     func setupAVCapture() {
@@ -122,7 +112,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func captureOutput(_ captureOutput: AVCaptureOutput, didDrop didDropSampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        // print("frame dropped")
+        
     }
     
     public func exifOrientationFromDeviceOrientation() -> CGImagePropertyOrientation {

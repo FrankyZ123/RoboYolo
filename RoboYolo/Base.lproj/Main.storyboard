@@ -64,6 +64,7 @@
                                     <segment title="Top-1"/>
                                     <segment title="Top-5"/>
                                     <segment title="Top-10"/>
+                                    <segment title="Top-N"/>
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top-N Selector" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuD-hd-LZo">
@@ -134,7 +135,7 @@
                                     <constraint firstAttribute="width" constant="284" id="3gp-BT-rdF"/>
                                     <constraint firstAttribute="height" constant="185" id="Voc-Xk-BjQ"/>
                                 </constraints>
-                                <mutableString key="text">This application currently only implements YOLOv3 and as such does not support classes outside of these bounds. Example classes that are relevant for this context include: spoon, fork, knife, cup, and bowl. A full list of these classes can be found in the model view in XCode. Top-N selector will draw the most confident prediction for an object in the top-n classes selected. Accuracy Threshold is the threshold of acceptance (if no objects are drawn, lower this). Motor selector are the input ports for the motors on the robot!</mutableString>
+                                <string key="text">This application currently only implements YOLOv3 and as such does not support classes outside of these bounds. Example classes that are relevant for this context include: spoon, fork, knife, cup, and bowl. A full list of these classes can be found in the model view in XCode. Top-N selector will draw the most confident prediction for an object in the top-n classes selected. Accuracy Threshold is the threshold of acceptance (if no objects are drawn, lower this). Motor selector are the input ports for the motors on the robot!</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

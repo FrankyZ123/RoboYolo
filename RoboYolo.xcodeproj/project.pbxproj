@@ -29,6 +29,7 @@
 		106DD5A625604E800030CB7A /* Ev3SystemCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD59725604E800030CB7A /* Ev3SystemCommand.swift */; };
 		106DD5A725604E800030CB7A /* Ev3Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD59825604E800030CB7A /* Ev3Brick.swift */; };
 		106DD5A825604E800030CB7A /* Ev3Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DD59925604E800030CB7A /* Ev3Enums.swift */; };
+		10841B4E26051815009E610D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10841B4D26051815009E610D /* Common.swift */; };
 		10BCC076257452D1006106CA /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 10BCC075257452D1006106CA /* YOLOv3.mlmodel */; };
 		10CFF81E25DB93A60027740C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF81D25DB93A60027740C /* HomeViewController.swift */; };
 		10CFF82725DBB5880027740C /* YOLOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CFF82625DBB5880027740C /* YOLOViewController.swift */; };
@@ -60,6 +61,7 @@
 		106DD59725604E800030CB7A /* Ev3SystemCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3SystemCommand.swift; sourceTree = "<group>"; };
 		106DD59825604E800030CB7A /* Ev3Brick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3Brick.swift; sourceTree = "<group>"; };
 		106DD59925604E800030CB7A /* Ev3Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ev3Enums.swift; sourceTree = "<group>"; };
+		10841B4D26051815009E610D /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		10BCC075257452D1006106CA /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 		10CFF81D25DB93A60027740C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		10CFF82625DBB5880027740C /* YOLOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				10BCC075257452D1006106CA /* YOLOv3.mlmodel */,
 				106DD56925604D2E0030CB7A /* CameraViewController.swift */,
 				10CFF82625DBB5880027740C /* YOLOViewController.swift */,
+				10841B4D26051815009E610D /* Common.swift */,
 				10CFF81D25DB93A60027740C /* HomeViewController.swift */,
 				106DD56B25604D2E0030CB7A /* Main.storyboard */,
 				106DD56E25604D300030CB7A /* Assets.xcassets */,
@@ -221,6 +224,7 @@
 				106DD59B25604E800030CB7A /* Ev3Command.swift in Sources */,
 				10CFF82A25DBFAEF0027740C /* RobotAction.swift in Sources */,
 				106DD5A825604E800030CB7A /* Ev3Enums.swift in Sources */,
+				10841B4E26051815009E610D /* Common.swift in Sources */,
 				106DD56825604D2E0030CB7A /* SceneDelegate.swift in Sources */,
 				106DD5A425604E800030CB7A /* Ev3ResponseManager.swift in Sources */,
 				106DD5A525604E800030CB7A /* Ev3Connection.swift in Sources */,
